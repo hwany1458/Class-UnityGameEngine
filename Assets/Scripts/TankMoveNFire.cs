@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.SceneManagement;
+
 public class TankMoveNFire : MonoBehaviour
 {
     //public Transform spPoint; // SpawnPoint
     Transform spPoint;
     public Transform bullet;    // Bullet 프리팹
+    public Transform explosion;     // 폭파 불꽃
 
     float moveSpeed = 10f;      // 이동속도
     float rotateSpeed = 60f;    // 회전속도(초속 60)
@@ -21,6 +24,8 @@ public class TankMoveNFire : MonoBehaviour
     Rigidbody rgBody;
     // 발사 불꽃을 처리하는 변수
     GameObject fire;
+
+    int hp = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -122,5 +127,30 @@ public class TankMoveNFire : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
         canFire = true;
+    }
+
+    // 충돌 판정 및 처리
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Bullet")
+        {
+            hp--;
+            Debug.Log("Current HP is " + hp);
+            if (hp < 0)
+            {
+                StartCoroutine(DestroySelf());
+            }
+        }
+    }
+
+    // Reset game
+    IEnumerator DestroySelf()
+    {
+        Instantiate(explosion, transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(2f);
+
+        // 현재 실행 중인 씬을 다시 불러온다
+        // 씬의 오브젝트가 모두 초기화됨
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

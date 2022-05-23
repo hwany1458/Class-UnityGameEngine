@@ -31,6 +31,9 @@ public class Bullet : MonoBehaviour
             //Destroy(other.gameObject);
             other.SendMessage("DestroySelf", transform.position);
         }
+        // 충돌 대상이 enemy일 경우,
+        // 벙커는 3개 부분으로 되어 있지만,
+        // 총알이 어느 부분이든 명중하면 파괴됨으로 간주하여 enemy의 최상위 객체에서 (스크립트로) 제거함
         if (other.tag == "Enemy")
         {
             other.transform.root.SendMessage("DestroySelf", transform.position);

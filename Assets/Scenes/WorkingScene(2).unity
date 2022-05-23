@@ -565,6 +565,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 1089052830381823365, guid: eb594589621aee1428776a64b7e5dc76, type: 3}
+  explosion: {fileID: 400006, guid: 7c442b9b6852b8a4f93306f3d154d471, type: 3}
 --- !u!82 &943969903
 AudioSource:
   m_ObjectHideFlags: 0
