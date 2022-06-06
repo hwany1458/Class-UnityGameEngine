@@ -81,7 +81,8 @@ public class Enemy : MonoBehaviour
     void DestroySelf(Vector3 pos)
     {
         Instantiate(explosion, transform.position, Quaternion.identity);
-        StartCoroutine(DestroyLazy());
+        //StartCoroutine(DestroyLazy());
+        Destroy(gameObject);
     }
 
     // 투명하게 사라지기

@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TankMoveNFire : MonoBehaviour
 {
     //public Transform spPoint; // SpawnPoint
-    Transform spPoint;
-    public Transform bullet;    // Bullet 프리팹
+    Transform spPoint;   // 무중력 총알 생성 위치
+    Transform spPoint1;  // 중력 총알 생성 위치
+    public Transform bullet;    // Bullet 프리팹 (중력이 없는 총알) -- 총알 생성 후, 이동
     public Transform explosion;     // 폭파 불꽃
+    public Transform bullet1;    // Bullet 프리팹 --- 중력을 갖는 총알 (총알 생성 후, 힘을 가함)
+    public Text stText;
 
     float moveSpeed = 10f;      // 이동속도
     float rotateSpeed = 60f;    // 회전속도(초속 60)
@@ -26,14 +30,19 @@ public class TankMoveNFire : MonoBehaviour
     GameObject fire;
 
     int hp = 10;
+    int power = 1000;
 
     // Start is called before the first frame update
     void Start()
     {
         // 시작할 떄 SpawnPoint의 transform 읽어오기
         spPoint = GameObject.Find("SpawnPoint").transform;
+        spPoint1 = GameObject.Find("SpawnPoint (1)").transform;
         gunSound = GetComponents<AudioSource>();     // 컴포넌트 읽기
         rgBody = GetComponent<Rigidbody>();
+
+        stText.text = "HP = " + hp;
+
         fire = GameObject.Find("FireEffect");
         fire.SetActive(false);
     }
@@ -70,6 +79,12 @@ public class TankMoveNFire : MonoBehaviour
             //AutoFire();
         }
 
+        // AddForce() 함수를 사용해서 단발로 발사
+        if (Input.GetButtonDown("Fire3"))
+        {
+            SingleShutAddForce();
+        }
+
         // if (Input.GetButton("Fire2") && canFire)
         // 오른쪽 마우스 조작을 통해 화면을 돌리기 위해, 연속 발사에서 마우스 조작을 뺌
         if (Input.GetKey(KeyCode.LeftAlt) && canFire)
@@ -84,6 +99,8 @@ public class TankMoveNFire : MonoBehaviour
         {
             gunSound[1].Stop();
         }
+
+        
     }
     private void FixedUpdate()
     {
@@ -136,6 +153,7 @@ public class TankMoveNFire : MonoBehaviour
         {
             hp--;
             Debug.Log("Current HP is " + hp);
+            stText.text = "HP = " + hp;
             if (hp < 0)
             {
                 StartCoroutine(DestroySelf());
@@ -152,5 +170,14 @@ public class TankMoveNFire : MonoBehaviour
         // 현재 실행 중인 씬을 다시 불러온다
         // 씬의 오브젝트가 모두 초기화됨
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    void SingleShutAddForce()
+    {
+        gunSound[0].Play();
+        Transform obj = Instantiate(bullet1, spPoint1.position, spPoint1.rotation) as Transform;
+        obj.GetComponent<Rigidbody>().AddForce(spPoint1.forward * power);
+
+        fire.SetActive(true);
     }
 }
