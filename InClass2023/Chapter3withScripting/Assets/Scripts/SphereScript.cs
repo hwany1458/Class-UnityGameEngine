@@ -16,9 +16,16 @@ public class SphereScript : MonoBehaviour
         
     }
 
-    void WhoAmI()
+    // 접근권한자를 안썼음 default (private)
+    public void WhoAmI()
     {
         Debug.Log("My name is " + gameObject.name);
     }
 
+    private void WhoWeAre(string name)
+    {
+        Debug.Log("We are " + gameObject.name + " and " + name);
+    }
+
+    
 }
