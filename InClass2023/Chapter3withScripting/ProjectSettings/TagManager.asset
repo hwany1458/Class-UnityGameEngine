@@ -42,3 +42,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: "\uBC30\uACBD"
+    uniqueID: 2788878039
+    locked: 0
+  - name: "\uC6D0\uACBD"
+    uniqueID: 2059018183
+    locked: 0
+  - name: "\uADFC\uACBD"
+    uniqueID: 2938425125
+    locked: 0
+  - name: "\uCE90\uB9AD"
+    uniqueID: 2593020211
+    locked: 0
