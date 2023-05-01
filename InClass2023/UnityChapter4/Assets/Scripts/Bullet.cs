@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour
     void Update()
     {
         float bulletAmount = bulletSpeed * Time.deltaTime; // 포탄 날라가는 거리
-        
+
         // 포탄(Bullet)을 전방으로 이동 (=날라가도록)
         transform.Translate(Vector3.forward * bulletAmount);
     }
