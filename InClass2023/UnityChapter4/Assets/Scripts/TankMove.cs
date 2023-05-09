@@ -10,7 +10,7 @@ public class TankMove : MonoBehaviour
     // 본 스크립트는 더이상 사용하지 않을 예정임
 
     float moveSpeed = 10f;
-    float rotateSpeed = 60;
+    float rotateSpeed = 60f;
 
     // Start is called before the first frame update
     void Start()
