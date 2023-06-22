@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.SceneManagement;  // 씬 전환을 위해서 필요함
+using UnityEngine.UI;  // (Legacy)Text를 쓸때 필요함
+//using TMPro;   // TextMeshPro를 쓸때 필요함
+
 public class TankMoveAndFire : MonoBehaviour
 {
     float moveSpeed = 10f; // 객체 이동 속도
@@ -19,6 +23,19 @@ public class TankMoveAndFire : MonoBehaviour
 
     GameObject fire;  // 포탄발사 시에 효과이미지(조명)
 
+    int hp = 10;
+    //int score = 0;
+
+    public GameObject explosion;  // 탱크(아군) 폭파시의 파티클
+    public Text countText;
+    //public TMP_Text hpText;  //hpText라는 이름으로 TMP_Text 데이타타입의 변수를 선언
+
+    //public int a;  //a라는 이름으로 정수형 변수를 선언 (접근권한 모두에게)
+
+    public Transform rigidbodyBulletG;
+    public Transform rigidbodySpawnPointG;
+    int powerBulletG = 500;
+
     // 여기까지 변수 선언 (이후는 함수) 
     //---------------------------------------------------------
 
@@ -33,6 +50,9 @@ public class TankMoveAndFire : MonoBehaviour
         // 포탄 발사시에 보여지는 효과이미지를 (처음 시작할 때) 비활성화 시킴
         fire = GameObject.Find("FireEffect");
         fire.SetActive(false);
+        //hp = 10;
+        countText.text = "HP : " + hp.ToString();
+        //hpText.text = "HP : " + hp.ToString();
     }
 
     // Update is called once per frame
@@ -55,6 +75,10 @@ public class TankMoveAndFire : MonoBehaviour
         // 오른쪽 마우스 클릭을 (키보드) 왼쪽 쉬프트로 변경
         if (Input.GetKey(KeyCode.LeftShift) && canFire) { StartCoroutine(AutoFire()); }
         if (!Input.GetKey(KeyCode.LeftShift)) { gunSound[1].Stop(); }
+
+        // (리지드바디가 있는 포탄) 발사
+        //if (Input.GetKey(KeyCode.A)) { SingleShotG(); }
+        if (Input.GetButtonDown("Jump")) { SingleShotG(); }
     }
 
     private void FixedUpdate()
@@ -132,5 +156,70 @@ public class TankMoveAndFire : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
         canFire = true;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        
+        Debug.Log("탱크 -- OnTriggerEnter() 함수 발생 " + other.tag);
+
+        if (other.tag == "Pickupitem20")  // 탱크가 아이템과 부딪쳤을 때
+        {
+            // 무슨 작업?
+            // 점수 업 (score +20)
+            // GameManager 오브젝트를 검색.GetComponent<GameManager>().score
+            // 아이템 오브젝트 화면에서 제거
+            other.gameObject.SetActive(false);
+            // 사운드 (음향효과)
+            // 파티클 (시각효과)
+        }
+
+        if (other.tag == "Bullet") // 탱크가 포탄을 맞았을 때
+        { 
+            hp--;
+            countText.text = "HP : " + hp.ToString();
+            //hpText.text = "HP : " + hp.ToString();
+            if (hp < 0)
+            {
+                Debug.Log("You died, Game Over..");
+                // 게임오버 씬 호출
+                StartCoroutine(DestroySelf());
+            }
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("OnCollisionEnter() 함수 발생 " + collision.gameObject.tag);
+
+        // PickupItem 충돌발생 ...
+        // (1) score +10, +20
+        // (2) item 오브젝트 제거 
+        // (3) 파티클 추가
+        // (4) 사운드 플레이
+    }
+
+    IEnumerator DestroySelf()
+    {
+        Instantiate(explosion, transform.position, transform.rotation);
+        // 게임종료 사운드
+        yield return new WaitForSeconds(2f);
+
+        // 씬 re-load (현재 실행중인 씬을 다시 불러옴)
+        // 씬 전환하기 위해서는 프로젝트 설정에서 씬을 등록시켜줘야 함
+        //SceneManager.LoadScene("WorkingScene");  // 직업 문자열로 씬 이름을 줄수있고
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    // 리지드바디가 있는 포탄 발사
+    void SingleShotG()
+    {
+        // 포탄 생성
+        Transform initBulletG = Instantiate(
+            rigidbodyBulletG, rigidbodySpawnPointG.position, rigidbodySpawnPointG.rotation) as Transform;
+        initBulletG.GetComponent<Rigidbody>().AddForce(rigidbodySpawnPointG.forward * powerBulletG);
+
+        // 사운드(음향효과)
+        // 파티클(시각효과)
     }
 }

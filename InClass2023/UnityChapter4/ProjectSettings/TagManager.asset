@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Target10
+  - Target20
+  - Enemy
+  - PickupItem10
+  - PickupItem20
+  - Map
+  - Bullet
   layers:
   - Default
   - TransparentFX
