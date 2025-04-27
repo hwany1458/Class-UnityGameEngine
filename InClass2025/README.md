@@ -20,6 +20,12 @@ CubeScript, SphereScript : Cube와 Sphere 객체를 생성해서, 스크립트�
 
 Tank 객체 생성, 이동 회전 (TankMove.cs 하단 숙제 참조하여 스크립트를 수정해봅니다)
 
+- TankProject (2025.04.15.)
+
+총알(탱크 포탄) 발사 및 다른 오브젝트(큐브 등)과의 충돌 확인
+
+OnTriggerEnter(), OnCollisionEnter() 함수 체크
+
 
 ### Scenes
 
