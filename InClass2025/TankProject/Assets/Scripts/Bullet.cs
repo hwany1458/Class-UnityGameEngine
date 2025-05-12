@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+//using System.Diagnostics;
+using System.Security.Cryptography;
+using System.Threading;
 using UnityEngine;
-
-
-// 총알 프리팹이 씬에 나타나는 것은 탱크스크립트에서 키보드 입력을 받을 때 생성
-// 총알스크립트에서는 생성된 총알 프리팹이 날라가도록 동작시킴 -- Update() 함수에서
 
 public class Bullet : MonoBehaviour
 {
@@ -13,28 +12,37 @@ public class Bullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // 객체가 생성된 다음, 3초 후에 (자동으로) 객체가 파괴되도록
-        Destroy(gameObject, 3.0f);
+        // 미사일 객체가 생성된 이후, 3초 후에 자동으로 객체가 파괴
+        Destroy(gameObject, 3);
     }
-
 
     // Update is called once per frame
     void Update()
     {
+        // 미사일(총알) 이동  -- 날라가는 효과
         float amount = speed * Time.deltaTime;
         transform.Translate(Vector3.forward * amount);
     }
 
-    // Is Trigger가 ON 일때 발생
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trigger 발생 " + other.name);
+        Debug.Log("Trigger event is occurred.. " + other.name + " " + other.tag);
+
+        // 충돌이 일어났으니까 .. 총알 객체는 화면에서 제거
+        if (other.tag == "ItemGreen")
+        {
+            // 시각효과 (파티클)
+            // 음향효과
+            // 20점+
+            Destroy(other.gameObject); // 맞춘 (대상) 객체를 제거
+        }
+        
+        
+        Destroy(gameObject);  /// 총알제거
     }
 
-    // Is Trigger가 OFF 일때 발생
-    private void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collision 발생 " + collision.gameObject.name);
+        Debug.Log("Collision event is occurred.." + collision.gameObject.name);
     }
-
 }
