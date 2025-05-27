@@ -21,6 +21,9 @@ public class TankMove : MonoBehaviour
 
     float delayTime = 0.1f;  // 발사지연시간
     bool canFire = true;   // 총알발사 가능여부를 체크하는 변수선언
+    GameObject fire;  // 발사시에 불꽃이미지를 보여주기 위한 변수선언
+
+    Rigidbody rgBody;  // 탱크 리지드바디
 
     //--- Methods
     // Start is called before the first frame update
@@ -37,10 +40,48 @@ public class TankMove : MonoBehaviour
         //gunSound = GetComponent<AudioSource>();
         // 2개 이상의 컴포넌트를 가져오려면
         gunSound = GetComponents<AudioSource>();
+
+        // 발시시 나타나는 불꽃이미지를 비활성화시킴
+        fire = GameObject.Find("FireEffect");
+        fire.SetActive(false);
+
+        rgBody = GetComponent<Rigidbody>();
+
     }
 
     // Update is called once per frame
-    void Update()
+
+    void Update() 
+    {
+        // Update()함수의 내용들을 모두 FixedUpdate()함수로 이동시킴
+        // 이동, 회전하는 부분만
+
+        // Fire1(Left Ctrl key)가 눌렸는지 안눌렸는지
+        if (Input.GetButtonDown("Fire1"))
+        {
+            // 미사일 객체를 씬에 생성, 발사(날라가게)
+            // 미사일이 날아가는 것은 Bullet.cs 에서 처리
+            // 단발사격
+            SingleShut();
+        }
+
+        // Fire2(Left Alt key)가 눌렸고, 발사가능할 떄(canFire) 연발사격
+        if (Input.GetButton("Fire3") && canFire)
+        {
+            // 연발사격 (그냥 실행)
+            //AutoFire();
+            // 발사 지연을 주기 위해, 코루틴으로 호출
+            StartCoroutine(AutoFire2());
+        }
+
+        // 연속발사 버튼을 때는 순간, (사운드 효과를 제거하기 위해) 사운드 멈춤
+        if (!Input.GetButton("Fire3"))
+        {
+            gunSound[1].Stop();
+        }
+    }
+
+    void FixedUpdate()
     {
         // 현재 프레임에서 이동할 거리 산출하는 변수
         float amount = moveSpeed * Time.deltaTime;
@@ -75,30 +116,8 @@ public class TankMove : MonoBehaviour
         // (3) (이동하면서) 회전할 경우,
         // 2개 앞 바퀴 객체를 함께 돌아가도록 스크립트를 수정하세요
 
-        // Fire1(Left Ctrl key)가 눌렸는지 안눌렸는지
-        if (Input.GetButtonDown("Fire1"))
-        {
-            // 미사일 객체를 씬에 생성, 발사(날라가게)
-            // 미사일이 날아가는 것은 Bullet.cs 에서 처리
-            // 단발사격
-            SingleShut();
-        }
+
         
-        // Fire2(Left Alt key)가 눌렸고, 발사가능할 떄(canFire) 연발사격
-        if (Input.GetButton("Fire2") && canFire)
-        {
-            // 연발사격 (그냥 실행)
-            //AutoFire();
-            // 발사 지연을 주기 위해, 코루틴으로 호출
-            StartCoroutine(AutoFire2());
-        }
-
-        // 연속발사 버튼을 때는 순간, (사운드 효과를 제거하기 위해) 사운드 멈춤
-        if (!Input.GetButton("Fire2"))
-        {
-            gunSound[1].Stop();
-        }
-
     }
 
     //-- 사용자 정의 함수
@@ -112,6 +131,7 @@ public class TankMove : MonoBehaviour
         //gunSound.Play();
         // 지금은 2개 이상 오디오사운드가 연결되서, 배열을 사용
         gunSound[0].Play();
+        fire.SetActive(true);  // 미사일 발사시, 불꽃이미지를 활성화시킴
     }
 
     // 연발사격 (일반함수)
@@ -129,7 +149,8 @@ public class TankMove : MonoBehaviour
     IEnumerator AutoFire2()
     {
         Instantiate(bullet, spPoint.position, spPoint.rotation);
-        gunSound[1].Play();
+        gunSound[1].Play();  // 음향효과
+        fire.SetActive(true);  // 시각효과
         canFire = false;  // 총알 발사, canFIre를 거짓으로 바꿔서 총알 발사를 막음
 
         yield return new WaitForSeconds(0.1f);
@@ -141,5 +162,15 @@ public class TankMove : MonoBehaviour
     // 숙제 (159페이지, 4.4.3 자동차엔진 사운드처리 - 2슬라이드)
     // 4.7 총구발사 화염 4슬라이드
 
+
+
+    // 숙제
+    // (1) 미사일발사시, 불꽃이미지 프리팹을 (다운로드 받은) ...FPS_RIFLE1 프리팹으로 변경해 봅니다
+
+    // (3) 씬에 있는 CubeGreen, CubeBlue, CubeRed 객체를
+    // 애셋스토어에서 프리 아이템을 다운받아서, 객체를 변경해 봅니다
+
+    // (5) 적군 객체 만들기
+    // 교재 4.9 (OR 슬라이드 179페이지)
 
 }

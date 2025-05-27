@@ -31,10 +31,13 @@ public class Bullet : MonoBehaviour
         // 충돌이 일어났으니까 .. 총알 객체는 화면에서 제거
         if (other.tag == "ItemGreen")
         {
-            // 시각효과 (파티클)
+            // 시각효과 (파티클) --- 추가됨
             // 음향효과
             // 20점+
-            Destroy(other.gameObject); // 맞춘 (대상) 객체를 제거
+            // 여기서 파괴되지 않고, 타켓 객체의 스크립트에서 파괴되는 걸로 변경
+            // Destroy(other.gameObject); // 맞춘 (대상) 객체를 제거
+            // TargetDestroy.cs 스크립트의 DestroySleft()함수를 호출해서 (그쪽에서) 타켓 객체를 제거
+            other.SendMessage("DestroySelf", transform.position);
         }
         
         
