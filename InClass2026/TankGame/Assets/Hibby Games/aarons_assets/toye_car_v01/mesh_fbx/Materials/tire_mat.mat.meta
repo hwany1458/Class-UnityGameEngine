@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 1c29a6f13e4908c45aab269a59121502
+timeCreated: 1493347623
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 89273
+  packageName: Aaron's Assets
+  packageVersion: 1.3.0
+  assetPath: Assets/Hibby Games/aarons_assets/toye_car_v01/mesh_fbx/Materials/tire_mat.mat
+  uploadId: 724978

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 571ea75721d2aa04fae67e4d0b6bdf91
+timeCreated: 1501109521
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 89273
+  packageName: Aaron's Assets
+  packageVersion: 1.3.0
+  assetPath: Assets/Hibby Games/aarons_assets/char_enemy_robot01/prefabs/char_enemy_robot01.prefab
+  uploadId: 724978

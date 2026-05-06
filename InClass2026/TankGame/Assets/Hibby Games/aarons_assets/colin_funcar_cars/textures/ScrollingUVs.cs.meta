@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 682a668c02a1060418b187ddcb8ff936
+timeCreated: 1441033675
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 89273
+  packageName: Aaron's Assets
+  packageVersion: 1.3.0
+  assetPath: Assets/Hibby Games/aarons_assets/colin_funcar_cars/textures/ScrollingUVs.cs
+  uploadId: 724978
