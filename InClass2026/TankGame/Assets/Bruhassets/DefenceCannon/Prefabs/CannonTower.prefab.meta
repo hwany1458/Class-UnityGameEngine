@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 1777e97210c83d742a8e67f3c2c8fe13
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 189756
+  packageName: 3D Defence Cannon Turret
+  packageVersion: 1.0
+  assetPath: Assets/Bruhassets/DefenceCannon/Prefabs/CannonTower.prefab
+  uploadId: 418833

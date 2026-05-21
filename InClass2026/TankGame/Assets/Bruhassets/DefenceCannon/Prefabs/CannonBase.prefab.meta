@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: fe8543f03859dbf4fa7ef192ea93027e
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 189756
+  packageName: 3D Defence Cannon Turret
+  packageVersion: 1.0
+  assetPath: Assets/Bruhassets/DefenceCannon/Prefabs/CannonBase.prefab
+  uploadId: 418833

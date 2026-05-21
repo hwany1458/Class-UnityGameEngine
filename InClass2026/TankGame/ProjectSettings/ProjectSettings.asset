@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 28
-  productGUID: dd0accc5fe0551640bd5be7361939e5c
+  productGUID: d70e6888568834944badb8907c11fefd
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: TankGame
+  productName: UnityChapter4TankGameBasic
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -846,14 +846,14 @@ PlayerSettings:
   editorAssembliesCompatibilityLevel: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: TankGame
+  metroPackageName: UnityChapter4TankGameBasic
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: TankGame
+  metroApplicationDescription: UnityChapter4TankGameBasic
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -924,11 +924,11 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: a1e7d12e-5c86-4768-af4f-b6499877924c
+  cloudProjectId: 98856a01-7d0c-40a1-8d20-b07a4ff1cbfe
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: TankGame 2026-04-02_14-26-50
-  organizationId: wonkwang
+  projectName: UnityChapter4TankGameBasic
+  organizationId: yong-hwan-lee
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

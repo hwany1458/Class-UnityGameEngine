@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0eb663003e47b53429c4fc496d5df1ff
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 189756
+  packageName: 3D Defence Cannon Turret
+  packageVersion: 1.0
+  assetPath: Assets/Bruhassets/DefenceCannon/Materials/TowerMaterial.mat
+  uploadId: 418833

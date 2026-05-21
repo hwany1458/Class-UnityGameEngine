@@ -1,119 +1,42 @@
-using System.Collections;
 using UnityEngine;
 
 public class TankMove : MonoBehaviour
 {
-    // ----- variables
-    private float moveSpeed = 10f;  // ÀÌµ¿¼Óµµ
-    private float rotateSpeed = 60f; // È¸Àü¼Óµµ
-
-    //public Transform spPoint;  // Æ÷Åº »ı¼º À§Ä¡(½ºÆÇÆ÷ÀÎÆ®)
-    private Transform spPoint;  // Æ÷Åº »ı¼º À§Ä¡(½ºÆÇÆ÷ÀÎÆ®)
-
-    public Transform missile; // ¹Ì»çÀÏ °´Ã¼ 
-
-    private bool canFire = true;
-
-    //»ç¿îµåÃ³¸®¸¦ À§ÇÑ º¯¼ö
-    //private AudioSource shotAudio;  // ¿Àµğ¿À¼Ò½º°¡ ÇÏ³ªÀÏ ¶§
-    private AudioSource[] shotAudio;   // ¿©·¯°³ÀÏ¶§ ¹è¿­·Î ¹ŞÀ½
+    //--- variables ---
+    float moveSpeed = 10f;  // ì´ë™ì†ë„
+    float rotateSpeed = 60f;   // íšŒì „ì†ë„(ì´ˆì† 60)
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // °ª ÇÒ´ç (2¹øÂ° ¹æ¹ı)
-        // private Á¢±Ù±ÇÇÑÀ¸·Î, ÀÎ½ºÆÑÅÍ¿¡ ¾È ³ªÅ¸³¯¶§
-        spPoint = GameObject.Find("SpawnPoint").transform;
-        //shotAudio = GetComponent<AudioSource>();  // ÇÏ³ªÀÏ¶§
-        shotAudio = GetComponents<AudioSource>();   // ¿©·¯°³ÀÏ¶§ (º¹¼ö)
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        // --- °´Ã¼ ÀÌµ¿
-        // ¼Ó¼º(ÁÂÇ¥)À» º¯°æÇÏ´Â ¹æ¹ı
+        // ì´ë™ë°©ë²•(1)
+        //transformì˜ Positionì— ì§ì ‘ ì ‘ê·¼í•˜ì—¬ (ê°’ì„) ì„¤ì •í•´ì£¼ëŠ” ë°©ë²•
         //transform.position += new Vector3(0, 0, 1);
 
-        // È­»ìÇ¥Å°¸¦ ÀÔ·Â ¹ŞÀ½
-        float hori = Input.GetAxis("Horizontal");
+        // ì´ë™ë°©ë²•(2)
+        //transformì˜ Translate() í•¨ìˆ˜ë¥¼ ì´ìš©í•˜ëŠ” ë°©ë²•
+        // í˜„ì¬ í”„ë ˆì„ì—ì„œ ì´ë™í•  ê±°ë¦¬
+        float amount = moveSpeed * Time.deltaTime;
+        float amountRotate = rotateSpeed * Time.deltaTime;
+
+        // ì „í›„(Vertical) ì¢Œìš°(Horizontal) ì´ë™í‚¤ë¥¼ ë°›ìŒ
         float vert = Input.GetAxis("Vertical");
+        float horz = Input.GetAxis("Horizontal");
 
-        float amountSpeed = moveSpeed * vert * Time.deltaTime;
-        float amountRotate = rotateSpeed * hori * Time.deltaTime;
+        // ì˜¤ë¸Œì íŠ¸ì˜ ì „ë°©ìœ¼ë¡œ ì´ë™
+        //transform.Translate(Vector3.forward * amount);
+        //transform.Translate(new Vector3(horz, 0, vert) * amount);   // ì „ë°©ì¢Œìš°ë¡œ ì´ë™
 
-        // (°úÁ¦1)
-        // Á¦ÀÚ¸®¿¡¼­ È¸Àü¸¸ ÇÏ´Â °ÍÀ» ¸·À¸¼¼¿ä
-        // [ÈùÆ®] ÀÌµ¿ÇÒ ¶§¸¸ È¸ÀüÇÏ°Ô
-        // (°úÁ¦2)
-        // ½¬ÇÁÆ®Å°¸¦ ´©¸¥ »óÅÂ¿¡¼­ ÀÌµ¿ È¸ÀüÀ» ÇÏ¸é, ¼Óµµ¸¦ ´õ ºü¸£°Ô
-        // ¾È´©¸£¸é, Á¤¼Ó ÁÖÇà
+        // ì˜¤ë¸Œì íŠ¸ì˜ ì „ë°©ìœ¼ë¡œ ì´ë™ (ì „ì§„)
+        transform.Translate(Vector3.forward * amount * vert);
+        // ì¢Œìš°íšŒì „
+        transform.Rotate(Vector3.up * amountRotate * horz);
 
-        // ÇÔ¼ö(µ¿ÀÛ ¸í·É)À» »ç¿ëÇÏ´Â ¹æ¹ı
-        // ¾ÕµÚ·Î ÀÌµ¿
-        transform.Translate(Vector3.forward * amountSpeed);
-        // ¾ÕµÚÁÂ¿ì ÀÌµ¿
-        //transform.Translate(new Vector3(hori,0,vert) * amountSpeed);
-        transform.Rotate(Vector3.up * amountRotate);
-
-        // Å° ´­¸®¸é ÀÎ½ÄÇØ¼­ ÇØ´ç ÇÔ¼ö È£Ãâ
-        // (´Ü¹ß ¹ß»ç) -- Down/Up 1¹ø ¹ß»ı
-        if(Input.GetButtonDown("Fire1"))
-        {
-            SingleShot();
-        }
-
-        /*
-        if(Input.GetButton("Fire3"))  // Fire3 Å°°¡ ´­·ÈÀ» ¶§
-        {
-            AutoShot();
-        }
-        */
-
-        if (Input.GetButton("Fire3") && canFire) // Fire3Å°°¡ ´­·ÈÀ» ¶§ ±×¸®°í ¹ß»ç°¡´ÉÇÒ ¶§
-        {
-            StartCoroutine(AutoShot2());   // ÄÚ·çÆ¾ÇÔ¼ö È£Ãâ
-        }
-        if (!Input.GetButton("Fire3")) { shotAudio[1].Stop(); }
-
-        // -- Å°º¸µå ÀÔ·Â ¿¹
-        if (Input.GetButtonDown("Jump")) {Debug.Log("Á¡ÇÁÇÒ·¡¿ä");}
-    }
-
-    //----- »ç¿ëÀÚ Á¤ÀÇ ÇÔ¼ö
-
-
-    // ´Ü¹ß ¹ß»ç ±â´É
-    void SingleShot()
-    {
-        // ¹Ì»çÀÏ »ı¼º
-        Instantiate(missile, spPoint.position, spPoint.rotation);
-        // Ã³¸®ÇØ¾ßÇÒ ³ğµé
-        // ¼Ò¸® (À½ÇâÈ¿°ú) Ã³¸®
-        //shotAudio.Play();  // ÇÏ³ªÀÏ¶§
-        shotAudio[0].Play();  // ¿©·¯°³ÀÏ¶§
-
-        // ½Ã°¢Àû È¿°ú (ºÒ²É, ¿¬±â ...)
-    }
-
-    // ¿¬¼Ó ¹ß»ç ±â´É
-    void AutoShot()
-    {
-        Debug.Log("¿¬¼Ó¹ß»ç ÇÔ¼ö È£ÃâµÊ");
-        Instantiate(missile, spPoint.position, spPoint.rotation);
-    }
-
-    IEnumerator AutoShot2()
-    {
-        Debug.Log("¿¬¼Ó¹ß»ç ÇÔ¼ö È£ÃâµÊ -- ÄÚ·çÆ¾»ç¿ë");
-        Instantiate(missile, spPoint.position, spPoint.rotation);  // ¹ß»ç(¹Ì»çÀÏ »ı¼º)
-        canFire = false;  // (³Ê) ¹ß»ç¸øÇØ...
-        // »ç¿îµå È¿°ú
-        shotAudio[1].Play();
-        // ½Ã°¢Àû È¿°ú
-        yield return new WaitForSeconds(0.1f);  // ºüÁ® ³ª°¨, 0.1ÃÊ µÚ¿¡ ´Ù½Ã µé¾î¿È
-
-        // 0.1ÃÊ ÈÄ¿¡ µ¹¾Æ¿Í¼­ ...
-        canFire = true;  // (³Ê) ¹ß»çÇÒ¼ö ÀÖ¾î ..
     }
 }

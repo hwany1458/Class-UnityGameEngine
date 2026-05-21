@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 928366e255a3efa4e8ef44e5f7711cb0
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 339074
+  packageName: Free Lowpoly Scifi Objects
+  packageVersion: 1.0
+  assetPath: Assets/FreeLowpolyScifiObjects/Scenes/DemoScene_Profiles/Post-process
+    Volume Profile.asset
+  uploadId: 803312
